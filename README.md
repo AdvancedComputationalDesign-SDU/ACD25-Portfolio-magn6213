@@ -6,6 +6,7 @@ This portfolio documents four computational design studies developed for Advance
 ## Assignments
 
 ### A1: NumPy Array Manipulation for 2D Pattern Generation
+![alt text](A1/images/perlin_output_seed_5_Scale_5_Colormap.png)
 In A1, I construct a Perlin‑like noise generator using fully vectorized NumPy operations. The system builds a coarse random grid, interpolates across it bilinearly, and normalizes the result into a continuous heightmap. This heightmap becomes the basis for pixel‑level pattern generation.
 
 Two visualization modes are implemented:
@@ -17,6 +18,7 @@ Two visualization modes are implemented:
 The study focuses on how array logic, interpolation, and controlled randomness can produce structured yet expressive image families. The toggle‑ready code structure supports rapid iteration across seeds, scales, and colour mappings, enabling systematic exploration of pattern behaviour.
 
 ### A2: Exploring Fractals through Recursive Geometric Patterns
+![alt text](A2/images/DLA_seed42_p1000_att500_a1-1.5.png)
 A2 investigates diffusion‑limited aggregation (DLA) through a recursive particle‑walking algorithm. Particles spawn near the boundary of a circular domain and perform random walks until they either attach to the growing cluster or exceed a recursion limit.
 
 Key features of the system include:
@@ -32,6 +34,7 @@ Key features of the system include:
 The resulting structure exhibits classic fractal branching behaviour, with local randomness accumulating into global hierarchy. The recursion‑based implementation highlights how simple rules can generate complex, organic geometries.
 
 ### A3: Parametric Structural Canopy
+![alt text](A3/images/myarchitectai_3du3dwqfm_sd.jpg)
 In A3, I design a series of canopy systems driven by different scalar fields and tessellation strategies, implemented in Grasshopper and GhPython. Each variation explores how surface logic, panelization, and structural support can be composed into coherent spatial assemblies.
 
 #### Variation 1 — Perlin‑Noise Terrain + Voronoi Tessellation
@@ -46,6 +49,7 @@ Scattered Gaussian bumps generate soft hill‑like protrusions. A diagrid tessel
 Across all three variations, the study examines how field‑driven surfaces, tessellation logics, and structural behaviours interact to produce coherent architectural systems.
 
 ### A4: Agent-Based Modeling for Surface Panelization
+![alt text](A4/images/Banner.gif)
 A4 develops an agent‑based panelization system in Grasshopper using three custom GhPython components: a surface builder, an agent builder, and an agent simulator. The simulation operates on a Rhino surface derived from my A1 heightmap, establishing continuity across the course.
 
 Agents are initialized across the surface and move through time according to multiple geometric signals:
