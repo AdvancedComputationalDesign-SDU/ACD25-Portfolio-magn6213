@@ -493,6 +493,7 @@ Expectation: As there is no repulsor points the points should move towards areas
 |-----------|---------|
 | ![No_repulsor_1](images/GIF_no_repulsor_1.gif) | ![No_repulsor_2](images/GIF_no_repulsor_2.gif) |
 
+
 | Parameter         | Value  | Description         |
 |------------------|--------|----------------------|
 | MinDistance          | 0.8    | The minium distance between agents               |
