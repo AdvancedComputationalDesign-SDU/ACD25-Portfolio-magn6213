@@ -1,61 +1,86 @@
 """
 Assignment 4: Agent-Based Model for Surface Panelization
 
-Author: Your Name
+Author: Magnus Støvring
 
-Surface Generator Template
+GhPython Script: Heightmap Surface
+Purpose:
+    Generate a Perlin-like noise heightmap and build a Rhino NURBS surface
+    from the resulting grid of points.
 
-Description:
-This file defines the structural outline for generating or preprocessing
-surfaces and geometric signal fields for Assignment 4.
-
-Note: This script is intended to be used within Grasshopper's Python
-scripting component.
+Inputs:
+    Width   : int, number of samples in X direction
+    Height  : int, number of samples in Y direction
+    Scale   : int, roughness scale (larger = smoother)
+    Seed    : int, random seed
+    Amp     : float, amplitude scaling for Z heights
+Outputs:
+    Surface : Rhino NurbsSurface built from heightmap
+    Pts     : list of Point3d grid points
 """
 
-# -----------------------------------------------------------------------------
-# Imports (extend as needed)
-# -----------------------------------------------------------------------------
-import rhinoscriptsyntax as rs
+import Rhino.Geometry as rg
 import numpy as np
 
+# --- Noise function ---
+def perlin_noise_vectorized(height, width, scale=30, seed=0):
+    rng = np.random.default_rng(seed)
 
-# -----------------------------------------------------------------------------
-# 1. Heightmap Generation
-# -----------------------------------------------------------------------------
-def generate_heightmap(shape=(50, 50), params=None):
-    """Create a heightmap array from input data."""
-    # TODO: generate and return a NumPy heightmap array
-    raise NotImplementedError("Implement generate_heightmap(...)")
+    grid_y = height // scale + 2
+    grid_x = width // scale + 2
+    grid = rng.random((grid_y, grid_x))
 
+    y = np.arange(height)
+    x = np.arange(width)
+    X, Y = np.meshgrid(x, y)
 
-# -----------------------------------------------------------------------------
-# 2. Uniform Surface Sampling
-# -----------------------------------------------------------------------------
-def sample_surface_uniform(surface, shape=(50, 50)):
-    """Sample a surface uniformly in its UV domain."""
-    # TODO: generate UV grid, evaluate surface points, return as NumPy array
-    raise NotImplementedError("Implement sample_surface_uniform(...)")
+    gx = X // scale
+    gy = Y // scale
+    tx = (X % scale) / scale
+    ty = (Y % scale) / scale
 
+    v00 = grid[gy, gx]
+    v10 = grid[gy, gx + 1]
+    v01 = grid[gy + 1, gx]
+    v11 = grid[gy + 1, gx + 1]
 
-# -----------------------------------------------------------------------------
-# 3. Grid Manipulation (apply heightmap to grid)
-# -----------------------------------------------------------------------------
-def manipulate_point_grid(heightmap, point_grid, scalar):
-    """Apply heightmap values to a sampled point grid."""
-    # TODO: modify point_grid using heightmap and return it
-    raise NotImplementedError("Implement manipulate_point_grid(...)")
+    i1 = v00 + tx * (v10 - v00)
+    i2 = v01 + tx * (v11 - v01)
+    noise = i1 + ty * (i2 - i1)
 
+    return noise
 
-# -----------------------------------------------------------------------------
-# 4. Build Surface from Manipulated Points
-# -----------------------------------------------------------------------------
-def build_surface(point_grid):
-    """Build a surface from a point grid."""
-    # TODO: use Rhino.Geometry to construct a surface from the point grid
-    raise NotImplementedError("Implement build_surface(...)")
+# --- Main program ---
+if Width < 2 or Height < 2:
+    Surface = None
+    Pts = []
+else:
+    noise = perlin_noise_vectorized(Height, Width, scale=Scale, seed=Seed)
 
-heightmap = generate_heightmap(shape=(U,V))
-pt_grid = sample_surface_uniform(surface, shape=(U,V))
-manip_pt_grid = manipulate_point_grid(heightmap, pt_grid, scalar)
-manip_srf = build_surface(pt_grid)
+    # Normalize to [0,1]
+    noise = (noise - noise.min()) / (noise.max() - noise.min())
+
+    # Scale by amplitude
+    H = Amp * noise
+
+    # Build grid of points
+    pt_grid = []
+    for i in range(Width):
+        row = []
+        for j in range(Height):
+            x = float(i)
+            y = float(j)
+            z = float(H[j, i])  # note: meshgrid indexing
+            row.append(rg.Point3d(x, y, z))
+        pt_grid.append(row)
+
+    # Flatten points for surface constructor
+    flat_pts = [p for row in pt_grid for p in row]
+
+    # Create NURBS surface from point grid
+    try:
+        Surface = rg.NurbsSurface.CreateFromPoints(flat_pts, Width, Height, 3, 3)
+    except:
+        Surface = None
+
+    Pts = flat_pts

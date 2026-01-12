@@ -482,16 +482,35 @@ As the focus of this assignment  was on agent simulation i have chosen not to va
 
 The surface below is evaluated using Rhino’s native ``Curvature Analysis`` tool, with the display style set to Gaussian. In this visualization, red indicates regions of positive curvature, blue highlights areas of negative curvature, and green marks zones of zero curvature.
 
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/Isometric.png" width="400"><br>
+      <strong>Isometric</strong>
+    </td>
+    <td align="center">
+      <img src="images/Top.png" width="400"><br>
+      <strong>Top</strong>
+    </td>
+  </tr>
+</table>
 
-| Isometric | Top |
-|-----------|---------|
-| ![Isometric](images/Isometric.png) | ![Top](images/Top.png) |
 
 ### Variation 1: [No repulsor point]
 Expectation: As there is no repulsor points the points should move towards areas with a higher absolute curvature (blue and red zones). The minimum distance in this instance is 0.8 allowing the agents to bunch up.
-| Curvature | Delaunay Mesh |
-|-----------|---------|
-| ![No_repulsor_1](images/GIF_no_repulsor_1.gif) | ![No_repulsor_2](images/GIF_no_repulsor_2.gif) |
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/GIF_no_repulsor_1.gif" width="400"><br>
+      <strong>Cuvature</strong>
+    </td>
+    <td align="center">
+      <img src="images/GIF_no_repulsor_2.gif" width="400"><br>
+      <strong>Delaunay Mesh</strong>
+    </td>
+  </tr>
+</table>
 
 
 | Parameter         | Value  | Description         |
@@ -509,9 +528,18 @@ As expected the agents move to the zones with a higher absolute curvature.
 ### Variation 2: [Larger minimum distance]
 Expectation: The minimum distance in this instance is 1.2 limiting the agents to ability to bunch up.
 
-| Curvature | Delaunay Mesh |
-|-----------|---------|
-| ![Min_Distance_1](images/GIF_larger_min_distance_1.gif) | ![Min_Distance_2](images/GIF_larger_min_distance_2.gif) |
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/GIF_larger_min_distance_1.gif" width="400"><br>
+      <strong>Cuvature</strong>
+    </td>
+    <td align="center">
+      <img src="images/GIF_larger_min_distance_2.gif" width="400"><br>
+      <strong>Delaunay Mesh</strong>
+    </td>
+  </tr>
+</table>
 
 
 
@@ -530,16 +558,32 @@ As expected the agents try to move to areas with a higher absolute curvature but
 ### Variation 3: [Repulsor point]
 Expectation: The introduction of a repulsor point should push away the agents from a specific zone. For this istance the repulsor is the black sphere on the surface.
 
-| Curvature | Delaunay Mesh |
-|-----------|---------|
-| ![Repulsor_1.1](images/GIF_first_repulsor_1.gif) | ![Repulsor_1.2](images/GIF_first_repulsor_2.gif) |
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/GIF_first_repulsor_1.gif" width="400"><br>
+      <strong>Cuvature</strong>
+    </td>
+    <td align="center">
+      <img src="images/GIF_first_repulsor_2.gif" width="400"><br>
+      <strong>Delaunay Mesh</strong>
+    </td>
+  </tr>
+</table>
 
 
-| Curvature | Delaunay Mesh |
-|-----------|---------|
-| ![Repulsor_2.1](images/GIF_second_repulsor_1.gif) | ![Repulsor_2.2](images/GIF_second_repulsor_2.gif) |
-
-
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/GIF_second_repulsor_1.gif" width="400"><br>
+      <strong>Cuvature</strong>
+    </td>
+    <td align="center">
+      <img src="images/GIF_second_repulsor_2.gif" width="400"><br>
+      <strong>Delaunay Mesh</strong>
+    </td>
+  </tr>
+</table>
 
 
 | Parameter         | Value  | Description         |
