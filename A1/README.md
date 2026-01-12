@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Documentation for Assignment 1
+title: Project Documentation
 parent: "A1: NumPy Array Manipulation for 2D Pattern Generation"
 nav_order: 2
 nav_exclude: false
