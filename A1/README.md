@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Project Documentation
+title: Documentation for Assignment 1
 parent: "A1: NumPy Array Manipulation for 2D Pattern Generation"
 nav_order: 2
 nav_exclude: false
@@ -77,6 +77,58 @@ Finally, the selected image is displayed using plt.imshow() and saved. The filen
 
 ## Results
 #### Red Channel:
+<h3>Red Channel</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_5.png" width="220"><br>
+    <strong>Scale 5</strong>
+  </div>
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_10.png" width="220"><br>
+    <strong>Scale 10</strong>
+  </div>
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_25.png" width="220"><br>
+    <strong>Scale 25</strong>
+  </div>
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_50.png" width="220"><br>
+    <strong>Scale 50</strong>
+  </div>
+
+</div>
+
+
+<h3>Magma Colormap</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_5_Colormap.png" width="220"><br>
+    <strong>Scale 5</strong>
+  </div>
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_10_Colormap.png" width="220"><br>
+    <strong>Scale 10</strong>
+  </div>
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_25_Colormap.png" width="220"><br>
+    <strong>Scale 25</strong>
+  </div>
+
+  <div style="text-align: center;">
+    <img src="images/perlin_output_seed_5_Scale_50_Colormap.png" width="220"><br>
+    <strong>Scale 50</strong>
+  </div>
+
+</div>
+
+
 | Scale 5 | Scale 10 | Scale 25 | Scale 50 |
 |---------|---------|---------|---------|
 | ![Seed 5 Scale 5](images/perlin_output_seed_5_Scale_5.png) | ![Seed 5 Scale 10](images/perlin_output_seed_5_Scale_10.png) | ![Seed 5 Scale 25](images/perlin_output_seed_5_Scale_25.png) |![Seed 5 Scale 50](images/perlin_output_seed_5_Scale_50.png) |
