@@ -34,13 +34,13 @@ The resulting structure exhibits classic fractal branching behaviour, with local
 ### A3: Parametric Structural Canopy
 In A3, I design a series of canopy systems driven by different scalar fields and tessellation strategies, implemented in Grasshopper and GhPython. Each variation explores how surface logic, panelization, and structural support can be composed into coherent spatial assemblies.
 
-### Variation 1 — Perlin‑Noise Terrain + Voronoi Tessellation
+#### Variation 1 — Perlin‑Noise Terrain + Voronoi Tessellation
 A wavy, organic surface generated from Perlin noise produces a terrain‑like canopy. Voronoi tessellation breaks the surface into irregular, puzzle‑like patches. Vertical branching supports rise from below, connecting to the canopy like roots meeting a forest floor, reinforcing the naturalistic character of the geometry.
 
-### Variation 2 — Radial Sinus Surface + Rectangular Grid
+#### Variation 2 — Radial Sinus Surface + Rectangular Grid
 A radial sinus function creates rhythmic circular ripples across the canopy. A simple rectangular grid tessellation overlays this surface, introducing order and clarity. The branching supports weave upward through this regular framework, creating a dialogue between organic growth and geometric structure.
 
-### Variation 3 — Gaussian Bumps + Diagrid
+#### Variation 3 — Gaussian Bumps + Diagrid
 Scattered Gaussian bumps generate soft hill‑like protrusions. A diagrid tessellation emphasizes stability and directional flow, producing a lightweight yet intricate lattice. The branching supports integrate into this network, reinforcing the sense of a geometric shell supported by organic struts.
 
 Across all three variations, the study examines how field‑driven surfaces, tessellation logics, and structural behaviours interact to produce coherent architectural systems.
