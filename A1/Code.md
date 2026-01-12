@@ -7,5 +7,3 @@ nav_order: 4
 
 ## Python code
 - [[`pattern_generator.py`](pattern_generator.py)]
-
-Yadadada

@@ -318,4 +318,5 @@ Increasing the max_attach represents increasing the attraction force of the attr
 - **Youtube tutorial for inspiration**: [https://www.youtube.com/watch?v=BD6s_gCAiAU](https://www.youtube.com/watch?v=BD6s_gCAiAU)
 
 A combination of ChatGPT and Copilot has been used during the project, primarily for troubleshooting related to the fractal generation aswell as generation of code for the README.md file
+
 ---
