@@ -1,3 +1,4 @@
+---
 layout: default
 title: Images
 parent: "A2: Fractals through Recursive Geometric Patterns"
