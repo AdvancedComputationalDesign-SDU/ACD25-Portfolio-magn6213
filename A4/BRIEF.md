@@ -11,7 +11,7 @@ search_exclude: false
 
 [View on GitHub]({{ site.github.repository_url }})
 
-![Example Structural Panelization](images/agent_based.jpg)
+![Example Structural Panelization](images/structural_tessellation.jpg)
 
 ## Objective
 
