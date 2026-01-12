@@ -6,7 +6,6 @@ nav_order: 3
 ---
 
 ## Generated images ##
-![!{alt text}](images/perlin_moire.png)
 ![alt text](images/perlin_output_seed_5_Scale_5_Colormap.png) 
 ![alt text](images/perlin_output_seed_5_Scale_5.png) 
 ![alt text](images/perlin_output_seed_5_Scale_10_Colormap.png) 
