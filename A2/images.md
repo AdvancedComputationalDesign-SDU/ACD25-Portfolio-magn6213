@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Images
-parent: "A2: Fractals through Recursive Geometric Patterns"
+parent: "A2: Exploring Fractals through Recursive Geometric Patterns"
 nav_order: 3
 ---
 
