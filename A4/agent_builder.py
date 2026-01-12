@@ -1,106 +1,96 @@
 """
 Assignment 4: Agent-Based Model for Surface Panelization
+Author: Magnus Støvring
 
-Author: Your Name
-
-Agent Builder Template
-
-Description:
-Defines the core Agent class and factory methods for constructing an
-agent-based system. Provides a high-level OOP structure for sensing,
-decision-making, and movement, along with a stateful Grasshopper
-GH_ScriptInstance example.
-
-Note: This script is intended to be used within Grasshopper's Python
-scripting component.
 """
 
+"""GhPython Script: Agent Builder
+Purpose:
+    This component lays out a grid of agents across a Rhino surface.
+    Each agent is initialized at a surface point with zero velocity.
+    The resulting list of Agent objects is meant to be fed into a simulator
+    component that updates their positions step by step.
 
-# -----------------------------------------------------------------------------
-# Imports (extend as needed)
-# -----------------------------------------------------------------------------
+Inputs:
+    Srf   : Surface (Rhino surface)
+    DivU  : int, number of divisions in the U direction
+    DivV  : int, number of divisions in the V direction
+
+Outputs:
+    Agents : list of Agent objects (each with position, velocity, and id)
+    Pts    : list of Point3d positions corresponding to the grid locations
+"""
+
 import rhinoscriptsyntax as rs
-import random
-import numpy as np
+import Rhino.Geometry as rg
 
-
-# -----------------------------------------------------------------------------
-# Utility functions (optional)
-# -----------------------------------------------------------------------------
-def seed_everything(seed):
-    """Set random seeds for reproducibility."""
-    if seed is not None:
-        random.seed(seed)
-        np.random.seed(seed)
-
-seed_everything(42)
-
-# -----------------------------------------------------------------------------
-# Core agent class
-# -----------------------------------------------------------------------------
+# -- Agent Class --
 class Agent:
-    """Represents a single agent with position, velocity, and state."""
-
+    """
+    Represents a single agent prepared for simulation.
+    Stores its initial position on the surface, velocity (starts at zero),
+    and placeholder fields that the simulator may use later (e.g., min_distance).
+    """
     def __init__(self, position, velocity):
-        """
-        Initialize the agent with position and velocity.
-        """
         self.position = position
         self.velocity = velocity
-        # TODO: Add any other attributes you need (e.g., id, age, type, etc.).
+        # Placeholders for downstream simulation use
+        self.min_distance = None
+        self.curvature_value = None
+        self.repulsor_forces = []
+        # Optional identifier for tracking agents
+        self.id = None
 
-    def sense(self, signals):
-        """Read environmental signals relevant to the agent."""
-        # TODO: Implement sensing logic based on your chosen signals.
+    def initialize_state(self):
+        """Reserved for future expansion; not used in the builder."""
         pass
 
-    def decide(self):
-        """Decide on actions based on sensed information."""
-        # TODO: Implement decision rules.
-        pass
+# -- Factory Function --
+def build_agents(surface, div_u, div_v):
+    """
+    Create agents on a uniform UV grid across the given surface.
+    - surface : Rhino surface
+    - div_u   : number of segments along U (produces div_u+1 points)
+    - div_v   : number of segments along V (produces div_v+1 points)
 
-    def move(self):
-        """Update position according to velocity and rules."""
-        # TODO: Implement movement logic.
-        pass
+    Returns:
+        agents : list of Agent instances with zero velocity
+        points : list of Point3d locations where agents are placed
+    """
+    # Validate inputs
+    if surface is None:
+        return [], []
+    if div_u < 1 or div_v < 1:
+        return [], []
 
-    def update(self, agents):
-        """Perform one update cycle: sense, decide, and move."""
-        # TODO: Call sense / decide / move here, or structure as you prefer.
-        pass
+    agents, points = [], []
+    agent_id = 0
 
+    # Get surface parameter domains
+    dom_u = surface.Domain(0)
+    dom_v = surface.Domain(1)
 
-# -----------------------------------------------------------------------------
-# Factory for creating agents
-# -----------------------------------------------------------------------------
-def build_agents(num_agents, initial_data=None):
-    """Create and initialize a list of Agent instances."""
-    # TODO: Implement build_agents(...) based on your design.
-    raise NotImplementedError("Implement build_agents(...) based on your design.")
+    # Loop through a (div_u+1) x (div_v+1) grid in parameter space
+    for i in range(div_u + 1):
+        # Linearly interpolate U parameter across the domain
+        u = dom_u.T0 + (i / float(div_u)) * (dom_u.T1 - dom_u.T0)
+        for j in range(div_v + 1):
+            # Linearly interpolate V parameter across the domain
+            v = dom_v.T0 + (j / float(div_v)) * (dom_v.T1 - dom_v.T0)
 
+            # Evaluate the surface at (u, v) to get a 3D point
+            pt = surface.PointAt(u, v)
+            points.append(pt)
 
-# -----------------------------------------------------------------------------
-# Grasshopper script instance (structural placeholder)
-# -----------------------------------------------------------------------------
-"""Example container for managing agent state in Grasshopper.
+            # Initialize agent with zero velocity at this point
+            vel = rg.Vector3d(0, 0, 0)
+            agent = Agent(pt, vel)
+            agent.id = agent_id
+            agent_id += 1
 
-Use this class to maintain and update agents between recomputations.
-"""
+            agents.append(agent)
 
-class MyComponent(Grasshopper.Kernel.GH_ScriptInstance):
-    """Manages persistent agent list across Grasshopper runs."""
+    return agents, points
 
-    def RunScript(self, N:int, reset:bool):
-        """
-        Main entry point called by Grasshopper.
-
-        Parameters
-        ----------
-        N : int
-            Number of agents.
-        reset : bool
-            When True, reinitialize agents.
-        """
-        if reset or not hasattr(self, "agents"):
-            self.agents = build_agents(N)
-        return self
+# -- Outputs --
+Agents, Pts = build_agents(Srf, DivU, DivV)

@@ -1,115 +1,70 @@
-# ACD-E25 Portfolio Template
-
-Use this repository to publish your final portfolio as a cohesive GitHub Pages site bringing together four assignments. The front matter and navigation are pre-wired; you are expected to add/edit the content, images, and code.
-
----
-
-## 1. Fill Your Assignments
-- Edit only the **body** of each assignment `README.md` (everything below the YAML front matter) and leave the front matter intact (example below).
-
-  ```yaml
-  ---
-  layout: default
-  title: Project Documentation
-  parent: "A1: NumPy Array Manipulation for 2D Pattern Generation"
-  nav_order: 2
-  nav_exclude: false
-  search_exclude: false
-  ---
-  ```
-
-- Include (recommended): overview, methods/pseudo-code, parameters & seeds, intermediate + final results with images, reflections, AI acknowledgments (if used).
-- Add/modify code in the assignment folder; store visuals in that assignment’s `images/` folder with descriptive filenames.
-- Reference images using **relative paths** (from the Markdown file):
-  - Example: When editing `A1/README.md`, use `![caption](images/your_image.png)`
-- Do **not** edit `index.md` or `BRIEF.md` files; they provide routing and the brief content.
-
----
-
-## 2. Update Site Config
-Open `_config.yml` and set:
-- `title`: your name (used in the site header).
-- `baseurl`: `/<repo-name>`
-  - Example: if your repo is `ACD-Portfolio`, use `baseurl: /ACD-Portfolio`
-
-Do not change other settings (`remote_theme`, plugins, etc.) unless you take responsibility for implementing and debugging.
-
----
-
-## 3. Publish with GitHub Pages
-1. In GitHub, navigate to **Settings → Pages → Build and deployment**.
-2. Set **Source** to “Deploy from a branch”, select branch `main`, folder `/ (root)`, then **Save**.
-3. Wait for the first build. Your site will appear at:
-   `https://<username>.github.io/<repo-name>/`
-
-Pages rebuilds automatically after each push.
-
----
-
-## Repository Layout
-```text
-README.md          # Landing page (this file)
-_config.yml        # Site settings (edit only title/baseurl)
-index.md           # Root redirect; do not edit
-A1/ ... A4/        # One folder per assignment
-  ├── index.md     # Front matter; do not edit
-  ├── BRIEF.md     # Assignment brief; do not edit
-  ├── README.md    # Your write-up (keep front matter, edit body)
-  ├── images/      # Diagrams/intermediate/final images
-  └── code files   # Provided scaffolds; extend/replace as needed
-```
-
----
-
-## Checklist Before Publishing
-- [ ] Assignment `README.md` files are complete (no placeholders).
-- [ ] Images are in the correct `images/` folder and referenced with relative paths.
-- [ ] Code runs and matches what you document.
-- [ ] `_config.yml` has your name and correct `baseurl`.
-- [ ] Changes are committed and pushed; GitHub Pages build is green.
-
----
-
-## Troubleshooting
-- **Broken links/styles:** confirm `baseurl` matches your repo name and front matter is untouched.
-- **Missing images:** verify filenames/paths and that images are committed to the right `images/` folder.
-- **Pages not updating:** check the Pages build status in GitHub Actions (or re-save the Pages settings).
-- **Common pitfalls:** editing/deleting front matter, wrong `baseurl`, images stored in the wrong assignment folder.
-
----
-
-## Landing Page Template
-Use the template below to draft your homepage, replacing the entire content of this `README.md`.
-- First, **customize the text**. You are free to use the template below or craft your own.
-- When you are ready to submit, **remove the surrounding code fence** (the triple backticks) so it renders as your landing page.
-- **Delete the guide sections above** for a clean portfolio homepage.
-
-```md
-# <Your Name> — ACD-E25 Portfolio
+## Magnus Støvring - ACD-E25 Portfolio
 
 ## Overview
-This portfolio documents four computational design studies developed for Advanced Computational Design. Across the series, I investigate <theme> through <methods/tools>, iterating through prototypes, parameter sweeps, and visual evaluation.
+This portfolio documents four computational design studies developed for Advanced Computational Design. Across the series, I investigate emergent geometric organisation through algorithmic modelling, recursive logic, field‑driven geometry, and agent‑based systems, iterating through prototypes, parameter sweeps, and visual evaluation. The work examines how local rules, scalar fields, and computational constraints can be composed into coherent spatial outcomes.
 
 ## Assignments
 
 ### A1: NumPy Array Manipulation for 2D Pattern Generation
-In A1, I develop a pixel-based pattern generator using NumPy array operations to transform a blank canvas into structured, colorized images. The work focuses on compositional logic (rules + constraints) and controlled randomness to produce a family of variations.
+![alt text](A1/images/perlin_output_seed_5_Scale_5_Colormap.png)
+In A1, I construct a Perlin‑like noise generator using fully vectorized NumPy operations. The system builds a coarse random grid, interpolates across it bilinearly, and normalizes the result into a continuous heightmap. This heightmap becomes the basis for pixel‑level pattern generation.
+
+Two visualization modes are implemented:
+
+- Manual RGB mode, where the noise drives a single colour channel for controlled, minimalistic outputs.
+
+- Colormap mode, where the noise is mapped through magma_r to produce terrain‑like gradients.
+
+The study focuses on how array logic, interpolation, and controlled randomness can produce structured yet expressive image families. The toggle‑ready code structure supports rapid iteration across seeds, scales, and colour mappings, enabling systematic exploration of pattern behaviour.
 
 ### A2: Exploring Fractals through Recursive Geometric Patterns
-In A2, I build a recursive geometric system to explore branching and fractal-like growth. I test how parameter choices (e.g., depth, angle, scaling, and spatial influences) affect density, hierarchy, and legibility of the resulting forms.
+![alt text](A2/images/DLA_seed42_p1000_att500_a1-1.5.png)
+A2 investigates diffusion‑limited aggregation (DLA) through a recursive particle‑walking algorithm. Particles spawn near the boundary of a circular domain and perform random walks until they either attach to the growing cluster or exceed a recursion limit.
+
+Key features of the system include:
+
+- Recursive walker function that encodes the entire diffusion process as a self‑calling rule.
+
+- Adaptive attachment radius, modulated by distance to an attractor point, producing subtle directional bias.
+
+- Dynamic spawn radius, expanding as the cluster grows.
+
+- Line‑based visualization, where each new particle connects to its nearest neighbour with a colour and thickness gradient.
+
+The resulting structure exhibits classic fractal branching behaviour, with local randomness accumulating into global hierarchy. The recursion‑based implementation highlights how simple rules can generate complex, organic geometries.
 
 ### A3: Parametric Structural Canopy
-In A3, I design a canopy system driven by a heightmap/field and implemented in Grasshopper/GhPython. I evaluate panelization/tessellation strategies and generate a structural support logic that responds to curvature, span, and local conditions.
+![alt text](A3/images/myarchitectai_3du3dwqfm_sd.jpg)
+In A3, I design a series of canopy systems driven by different scalar fields and tessellation strategies, implemented in Grasshopper and GhPython. Each variation explores how surface logic, panelization, and structural support can be composed into coherent spatial assemblies.
+
+#### Variation 1 — Perlin‑Noise Terrain + Voronoi Tessellation
+A wavy, organic surface generated from Perlin noise produces a terrain‑like canopy. Voronoi tessellation breaks the surface into irregular, puzzle‑like patches. Vertical branching supports rise from below, connecting to the canopy like roots meeting a forest floor, reinforcing the naturalistic character of the geometry.
+
+#### Variation 2 — Radial Sinus Surface + Rectangular Grid
+A radial sinus function creates rhythmic circular ripples across the canopy. A simple rectangular grid tessellation overlays this surface, introducing order and clarity. The branching supports weave upward through this regular framework, creating a dialogue between organic growth and geometric structure.
+
+#### Variation 3 — Gaussian Bumps + Diagrid
+Scattered Gaussian bumps generate soft hill‑like protrusions. A diagrid tessellation emphasizes stability and directional flow, producing a lightweight yet intricate lattice. The branching supports integrate into this network, reinforcing the sense of a geometric shell supported by organic struts.
+
+Across all three variations, the study examines how field‑driven surfaces, tessellation logics, and structural behaviours interact to produce coherent architectural systems.
 
 ### A4: Agent-Based Modeling for Surface Panelization
-In A4, I use agent behaviors to sample and rationalize a surface into a panelized system. I define sensing rules and constraints (e.g., proximity, alignment, boundaries) and iterate on behaviors to balance local decisions with global coherence.
+![alt text](A4/images/Banner.gif)
+A4 develops an agent‑based panelization system in Grasshopper using three custom GhPython components: a surface builder, an agent builder, and an agent simulator. The simulation operates on a Rhino surface derived from my A1 heightmap, establishing continuity across the course.
 
-## Highlights (optional)
-- **Technique:** <one technique you used across assignments>
-- **Best result:** <one outcome + where it appears (A#)>
-- **Next step:** <one concrete extension you would test next>
+Agents are initialized across the surface and move through time according to multiple geometric signals:
 
-## Contact (optional)
-- GitHub: <link>
-- Email: <email>
-```
+Curvature‑Driven Behaviour
+Agents compute the gradient of absolute Gaussian curvature and move toward regions where curvature changes most rapidly. This produces flow lines that align with geometric features of the surface.
+
+Spatial Influences
+- Separation: agents avoid neighbours to maintain spacing.
+
+- Repulsion: agents steer away from user‑defined repulsor points.
+
+- Boundary proximity: agents slow or freeze near UV boundaries to prevent escape.
+
+Agent states persist across iterations using scriptcontext.sticky, enabling interactive, real‑time simulation.
+
+The final panelization is generated by feeding agent positions into Grasshopper’s Delaunay Mesh component. The resulting topology reflects the emergent distribution of agents, producing a panel system shaped not by a single global rule but by the interplay of multiple local behaviours.
+

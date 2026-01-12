@@ -1,57 +1,82 @@
-# Assignment 1: NumPy Array Manipulation for 2D Pattern Generation
-
-# Instructions:
-# - Write your code to generate patterns using NumPy.
-# - Use comments to explain your logic and the methods you're using.
-# - Feel free to be creative and explore different techniques.
-
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Initialize your canvas (e.g., a 2D array filled with zeros)
-# You can adjust the size as needed
-canvas_height = 100  # Modify as desired
-canvas_width = 100   # Modify as desired
-canvas = np.zeros((canvas_height, canvas_width))
+## --- Random seed --- ##
+seed = 5
+np.random.seed(seed)
 
-# Apply array manipulations to create a pattern
-# Suggestions:
-# - Use slicing and indexing to create stripes or checkerboards
-# - Use mathematical functions to create gradients
-# - Combine multiple patterns
+## --- Roughness --- ##
+scale = 50
 
-# Example (you can modify or remove this):
-# Create horizontal stripes
-# for i in range(0, canvas_height, 20):
-#     canvas[i:i+10, :] = 255  # Assign a value to create a stripe
+## --- Vectorized Perlin-like noise function --- ##
+def perlin_noise_vectorized(height, width, scale=scale):
+    grid_y = height // scale + 2
+    grid_x = width // scale + 2
+    grid = np.random.rand(grid_y, grid_x)
 
-# Introduce randomness to add variability
-# Suggestions:
-# - Use np.random functions to add noise
-# - Randomly change pixel values within certain regions
+    y = np.arange(height)
+    x = np.arange(width)
+    X, Y = np.meshgrid(x, y)
 
-# Example:
-# noise = np.random.randint(0, 50, (canvas_height, canvas_width))
-# canvas = canvas + noise
+    gx = X // scale
+    gy = Y // scale
+    tx = (X % scale) / scale
+    ty = (Y % scale) / scale
 
-# Work with RGB channels
-# Convert your 2D canvas to a 3D array for RGB representation
-# Assign different colors to different parts of your pattern
+    v00 = grid[gy, gx]
+    v10 = grid[gy, gx + 1]
+    v01 = grid[gy + 1, gx]
+    v11 = grid[gy + 1, gx + 1]
 
-# Example:
-# canvas_rgb = np.stack((canvas, canvas, canvas), axis=2)
+    i1 = v00 + tx * (v10 - v00)
+    i2 = v01 + tx * (v11 - v01)
+    noise = i1 + ty * (i2 - i1)
 
-# Assign colors
-# canvas_rgb[:, :, 0] = 255  # Modify the red channel
-# canvas_rgb[:, :, 1] = canvas_rgb[:, :, 1] * 0.5  # Modify the green channel
+    return noise
 
-# Ensure your array values are within the valid range (0-255)
-# canvas_rgb = np.clip(canvas_rgb, 0, 255)
+## --- Canvas size --- ##
+height = 1000
+width = 1000
 
-# Visualize and save your image
-# plt.imshow(canvas_rgb.astype(np.uint8))
-# plt.axis('off')  # Hide axis
-# plt.show()
+## --- Generate Perlin noise --- ##
+noise = perlin_noise_vectorized(height, width)
 
-# Save the image to the images folder
-# plt.savefig('images/pattern_example.png', bbox_inches='tight', pad_inches=0)
+## --- Normalise noise to [0, 1] --- ##
+noise = (noise - noise.min()) / (noise.max() - noise.min())
+
+# ============================================================
+#   VERSION 1: MANUAL RGB — RED CHANNEL ONLY (TOGGLE ON/OFF)
+# ============================================================
+""" rgb_image = np.zeros((height, width, 3))
+rgb_image[..., 0] = noise   # Red channel = noise
+# Green and blue remain zero
+
+active_title = "Scale=50 , Red Channel" """
+
+
+# ============================================================
+#   VERSION 2: COLORMAP VERSION (TOGGLE ON/OFF)
+# ============================================================
+rgb_image = plt.cm.get_cmap("magma_r")(noise)  # RGBA output
+
+active_title = "Scale=50 , Colormap"
+
+# ============================================================
+#   DISPLAY
+# ============================================================
+
+fig = plt.figure(figsize=(10, 6))
+plt.imshow(rgb_image)
+plt.title(active_title)
+plt.axis("off")
+
+plt.show()
+
+## --- Save image --- ##
+save_path = r"C:\Users\magn6\Documents\GitHub\ACD25-Portfolio-magn6213\A1\images"
+filename = f"{save_path}\\perlin_output_seed_{seed}_Scale_{scale}_Colormap.png"
+
+fig.savefig(filename, dpi=300, bbox_inches="tight", pad_inches=0)
+print(f"Saved: {filename}")
+
+
